@@ -57,6 +57,8 @@ public class DBController {
         items.put(Testaufgabe.type[0], new ArrayList<>());
         items.put(Testaufgabe.type[1], new ArrayList<>());
         items.put(Testaufgabe.type[2], new ArrayList<>());
+        items.put(Testaufgabe.type[3], new ArrayList<>());
+        items.put(Testaufgabe.type[4], new ArrayList<>());
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("create table if not exists items ( id integer constraint items_pk primary key autoincrement, wtype TEXT not null, string TEXT);");

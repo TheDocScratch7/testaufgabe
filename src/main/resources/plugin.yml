@@ -8,6 +8,6 @@ prefix: testaufgabe
 api-version: 1.16
 commands:
   testaufgabe:
-    usage: /testaufgabe give luckblock <BAD/OKAY/GOOD> und /testaufgabe add hand item to db <BAD/OKAY/GOOD>
+    usage: /testaufgabe give luckblock <BAD/OKAY/GOOD> und /testaufgabe add hand item to db <DEADLY/BAD/OKAY/GOOD/VERY_GOOD>
     description: testaufgabe
     aliases: [testaufgabe]

@@ -10,7 +10,8 @@ import org.bukkit.command.CommandExecutor;
 
 public class Testaufgabe extends TestaufgabeJP implements CommandExecutor {
 
-    public static volatile String[] type = new String[]{"BAD", "OKAY", "GOOD"};
+    public static volatile String[] type = new String[]{"DEADLY", "BAD", "OKAY", "GOOD", "VERY_GOOD"};
+    public static volatile String[] type2 = new String[]{"BAD", "OKAY", "GOOD"};
     public static volatile String prefix = new String("§0Testaufgabe -> §7");
     public static volatile Testaufgabe testaufgabe;
 

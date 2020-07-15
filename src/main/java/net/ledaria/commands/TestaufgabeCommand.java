@@ -35,7 +35,7 @@ public class TestaufgabeCommand implements CommandExecutor {
             }
         } else if (args.length == 3) {
             if (args[0].equals("give") && args[1].equals("luckyblock")) {
-                if (Stream.of(Testaufgabe.type).anyMatch(s -> s.equals(args[2]))) {
+                if (Stream.of(Testaufgabe.type2).anyMatch(s -> s.equals(args[2]))) {
                     ItemStack itemStack = new ItemStack(Material.HONEY_BLOCK);
                     ItemMeta meta = itemStack.getItemMeta();
                     meta.getPersistentDataContainer()
