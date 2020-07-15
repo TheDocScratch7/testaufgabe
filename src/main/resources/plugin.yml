@@ -1,0 +1,13 @@
+name: testaufgabe
+main: testaufgabe
+version: testaufgabe
+author: testaufgabe
+description: testaufgabe
+website: testaufgabe
+prefix: testaufgabe
+api-version: 1.16
+commands:
+  testaufgabe:
+    usage: /testaufgabe give luckblock <BAD/OKAY/GOOD> und /testaufgabe add hand item to db <BAD/OKAY/GOOD>
+    description: testaufgabe
+    aliases: [testaufgabe]
