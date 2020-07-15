@@ -1,10 +1,14 @@
+package net.ledaria.database;
+
+import net.ledaria.Testaufgabe;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class DBController {
+public class DBController {
 
     private static Connection connection;
     private static final String DB_PATH = System.getProperty("user.home") + "/" + "testdb.db";
@@ -18,10 +22,10 @@ class DBController {
         }
     }
 
-    public DBController(){
+    public DBController() {
     }
 
-    protected void initDBConnection() {
+    public void initDBConnection() {
         try {
             if (connection != null && !connection.isClosed())
                 return;
@@ -48,19 +52,19 @@ class DBController {
         });
     }
 
-    protected Map<String, List<String>> loadItems() {
+    public Map<String, List<String>> loadItems() {
         Map<String, List<String>> items = new HashMap<>();
-        items.put(testaufgabe.warsch[0], new ArrayList<>());
-        items.put(testaufgabe.warsch[1], new ArrayList<>());
-        items.put(testaufgabe.warsch[2], new ArrayList<>());
+        items.put(Testaufgabe.type[0], new ArrayList<>());
+        items.put(Testaufgabe.type[1], new ArrayList<>());
+        items.put(Testaufgabe.type[2], new ArrayList<>());
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("create table if not exists items ( id integer constraint items_pk primary key autoincrement, warsch TEXT not null, string TEXT);");
+            statement.executeUpdate("create table if not exists items ( id integer constraint items_pk primary key autoincrement, wtype TEXT not null, string TEXT);");
             ResultSet rs = statement.executeQuery("SELECT * FROM items;");
             while (rs.next()) {
-                List<String> itemsInside = items.get(rs.getString("warsch"));
+                List<String> itemsInside = items.get(rs.getString("wtype"));
                 itemsInside.add(rs.getString("string"));
-                items.put(rs.getString("warsch"), itemsInside);
+                items.put(rs.getString("wtype"), itemsInside);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -68,11 +72,11 @@ class DBController {
         return items;
     }
 
-    protected void addItem(String string, String string2) {
+    public void addItem(String string, String string2) {
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("create table if not exists items ( id integer constraint items_pk primary key autoincrement, warsch TEXT not null, string TEXT);");
-            stmt.execute("INSERT INTO items (warsch, string) VALUES ('" + string + "', '" + string2 + "')");
+            stmt.executeUpdate("create table if not exists items ( id integer constraint items_pk primary key autoincrement, wtype TEXT not null, string TEXT);");
+            stmt.execute("INSERT INTO items (wtype, string) VALUES ('" + string + "', '" + string2 + "')");
             connection.close();
         } catch (SQLException e) {
             System.err.println("Couldn't handle DB-Query");
@@ -80,7 +84,7 @@ class DBController {
         }
     }
 
-    protected void closeDBConnection() {
+    public void closeDBConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
                 try {

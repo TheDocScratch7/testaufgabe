@@ -1,5 +1,7 @@
+package net.ledaria.manager;
+
 import com.google.common.base.Charsets;
-import org.bukkit.Bukkit;
+import net.ledaria.database.DBController;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -10,11 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class itemManager {
+public class ItemManager {
 
-    protected volatile static Map<String, List<String>> items = new HashMap<>();
+    public volatile static Map<String, List<String>> items = new HashMap<>();
 
-    protected void start() {
+    public void start() {
         long start = System.currentTimeMillis();
         new DBController().initDBConnection();
         items = new DBController().loadItems();
@@ -27,13 +29,13 @@ public class itemManager {
         System.out.println(items);
     }
 
-    protected static void addItem(ItemStack stack, String warsch) {
+    public static void addItem(ItemStack stack, String type) {
         String itemStr = itemToString(stack);
         new DBController().initDBConnection();
-        new DBController().addItem(warsch, itemStr);
-        List<String> itemsInside = items.get(warsch);
+        new DBController().addItem(type, itemStr);
+        List<String> itemsInside = items.get(type);
         itemsInside.add(itemStr);
-        items.put(warsch, itemsInside);
+        items.put(type, itemsInside);
     }
 
     protected static String itemToString(ItemStack itemStack) {
@@ -44,7 +46,7 @@ public class itemManager {
         return serialized;
     }
 
-    protected static ItemStack stringToItem(String string) {
+    public static ItemStack stringToItem(String string) {
         String yaml = new String(Base64.getDecoder().decode(string.getBytes(StandardCharsets.UTF_8)), Charsets.UTF_8);
         YamlConfiguration itemConfig = new YamlConfiguration();
         try {

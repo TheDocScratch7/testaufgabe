@@ -1,3 +1,6 @@
+package net.ledaria.listener;
+
+import net.ledaria.manager.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,49 +13,46 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Collections;
 import java.util.List;
 
-public class playerDestroyHoneyBlockListener implements Listener {
+public class PlayerDestroyHoneyBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onHoneyBlockBreak(BlockBreakEvent event) {
         if (event.getBlock().getType() == Material.HONEY_BLOCK) {
-            if (!event.getBlock().hasMetadata("warsch"))
+            if (!event.getBlock().hasMetadata("type"))
                 return;
             event.setDropItems(false);
-            String warsch = event.getBlock().getMetadata("warsch").get(0).asString();
+            String type = event.getBlock().getMetadata("type").get(0).asString();
             int zufall = (int) Math.floor((Math.random() * 1000) % 100); //0 - 99
-            if (warsch.equals("BAD"))
-            { // 90% BAD // 9% OKAY // 1% GOOD
+            if (type.equals("BAD")) { // 90% BAD // 9% OKAY // 1% GOOD
                 if (zufall < 90)
                     openBlock("BAD", event.getBlock().getLocation());
                 else if (zufall < 99)
                     openBlock("OKAY", event.getBlock().getLocation());
                 else
                     openBlock("GOOD", event.getBlock().getLocation());
-            }
-            else if (warsch.equals("GOOD"))
-            { // 1% BAD // 9% OKAY // 90% GOOD
+            } else if (type.equals("GOOD")) { // 1% BAD // 9% OKAY // 90% GOOD
                 if (zufall < 90)
                     openBlock("GOOD", event.getBlock().getLocation());
                 else if (zufall < 99)
                     openBlock("OKAY", event.getBlock().getLocation());
                 else
                     openBlock("BAD", event.getBlock().getLocation());
-            }else{
+            } else {
                 if (zufall < 33)
                     openBlock("GOOD", event.getBlock().getLocation());
-                else if (zufall < 66) {
+                else if (zufall < 66)
                     openBlock("OKAY", event.getBlock().getLocation());
-                } else
+                else
                     openBlock("BAD", event.getBlock().getLocation());
             }
         }
     }
 
-    protected void openBlock(String warsch, Location loc) {
-        List<String> itemsInside = itemManager.items.get(warsch);
+    protected void openBlock(String type, Location loc) {
+        List<String> itemsInside = ItemManager.items.get(type);
         Collections.shuffle(itemsInside);
         String itemInsideToDrop = itemsInside.get(0);
-        ItemStack item = itemManager.stringToItem(itemInsideToDrop);
+        ItemStack item = ItemManager.stringToItem(itemInsideToDrop);
         if (item == null)
             return;
         if (item.getType() == Material.PAPER && item.hasItemMeta() && item.getItemMeta().getDisplayName().startsWith("/")) {
